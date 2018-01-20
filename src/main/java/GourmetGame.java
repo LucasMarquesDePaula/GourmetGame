@@ -119,13 +119,14 @@ public class GourmetGame {
             game.iterativeSearch();
 
             if (ui.ask(game.lastAccessedPlate)) {
-//              If the game guess what plate user was thinking about
+//               If the game coud guess what plate user was thinking about
+//              show a message.
                 ui.showWinMessage();
                 continue;
             }
 
-//           If the game could not guess what plate user was thinking about
-//          was thinking about, add this entry to the decision tree
+//           If the game could not guess what plate user was thinking about,
+//          add this new entry to the decision tree
             String plate = ui.askForANewPlate();
             String feature = ui.askForANewFeature(plate, game.lastAccessedPlate);
             game.learn(plate, feature);
