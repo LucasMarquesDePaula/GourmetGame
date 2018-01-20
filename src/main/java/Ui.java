@@ -65,6 +65,8 @@ public class Ui {
 
     /**
      * Show to user a dialog asking for prompt a new plate
+     *
+     * @return plate's name if user answer. Else, null
      */
     String askForANewPlate() {
         return showInputDialog("Qual é o nome do prato ?");
@@ -76,6 +78,7 @@ public class Ui {
      * @param plate1 the name of plate that have the feature
      * @param plate2 the node which contains the name of plate that have not the
      * feature
+     * @return feature's name if user answer. Else, null
      */
     String askForANewFeature(String plate1, Tree<String> plate2) {
         return showInputDialog(frame, String.format("%s é ______ mas %s não ?", plate1, plate2.getData()));

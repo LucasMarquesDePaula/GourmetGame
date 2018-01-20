@@ -7,7 +7,7 @@
  */
 public class Tree<T> {
 
-    private final T data;
+    private T data;
     private Tree<T> left;
     private Tree<T> right;
 
@@ -29,12 +29,12 @@ public class Tree<T> {
         this.setRight(right);
     }
 
-    /**
-     *
-     * @return the data
-     */
     public T getData() {
         return data;
+    }
+
+    public void setData(T data) {
+        this.data = data;
     }
 
     /**

@@ -15,11 +15,10 @@ public class GourmetGame {
 
 //  the root of decision tree
     private final Tree<String> root;
-    private Tree<String> lastAccessedNode;
 
     private GourmetGame() {
 //      Initialize the decision tree
-        this.root = new Tree<>("massa", "bolo de chocolate", "lazanha");
+        this.root = new Tree<>("massa", "lazanha", "bolo de chocolate");
     }
 
     private Tree<String> guess() {
@@ -32,11 +31,10 @@ public class GourmetGame {
 
 //      If tree is a leaf, the search has been finished.
         while (!tree.isLeaf()) {
-            lastAccessedNode = tree;
             if (ui.ask(tree)) {
-                tree = tree.getRight();
-            } else {
                 tree = tree.getLeft();
+            } else {
+                tree = tree.getRight();
             }
         }
 
@@ -44,25 +42,20 @@ public class GourmetGame {
     }
 
     /**
-     * Add to game's decicion tree a new plate.
+     * Add to game's decision tree a new plate.
      *
      * @param plate the plate's name.
      * @param feature the feature's name to associate the plate with.
      */
-    private void learn(String plate, String feature) {
+    private static void learn(Tree<String> leaf, String plate, String feature) {
         /**
          * Learning is a process which a plate, associated with feature, is
-         * added to the decision tree. This add is done on the last accessed
-         * feature.
+         * added to the decision tree. This add must be done on a leaf.
          */
 
-        Tree<String> entry = new Tree<>(feature);
-
-        entry.setRight(lastAccessedNode.getLeft());
-        entry.setLeft(plate);
-
-//      Add new entry to tree
-        lastAccessedNode.setLeft(entry);
+        leaf.setRight(leaf.getData());
+        leaf.setLeft(plate);
+        leaf.setData(feature);
     }
 
     public static void start() {
@@ -75,7 +68,7 @@ public class GourmetGame {
             Tree<String> found = game.guess();
 
             if (ui.ask(found)) {
-//               If the game coud guess what plate user was thinking about
+//               If the game could guess what plate user was thinking about
 //              show a message.
                 ui.showWinMessage();
                 continue;
@@ -85,7 +78,7 @@ public class GourmetGame {
 //          add this new entry to the decision tree
             String plate = ui.askForANewPlate();
             String feature = ui.askForANewFeature(plate, found);
-            game.learn(plate, feature);
+            learn(found, plate, feature);
         }
     }
 
