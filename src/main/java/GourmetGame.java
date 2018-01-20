@@ -42,7 +42,7 @@ public class GourmetGame {
     }
 
     /**
-     * Add to game's decision tree a new plate.
+     * Add to game's knowledgment tree a new plate.
      *
      * @param plate the plate's name.
      * @param feature the feature's name to associate the plate with.
@@ -64,7 +64,6 @@ public class GourmetGame {
 //      While user wants to play
         while (ui.askForANewRound()) {
 
-//          Both, recursive and iterative search, produces the same result
             Tree<String> found = game.guess();
 
             if (ui.ask(found)) {
