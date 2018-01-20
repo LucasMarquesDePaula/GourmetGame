@@ -2,7 +2,7 @@
 /**
  * The GourmetGame is the main class of a game wich objective is to guess what
  * plate of food the user is thinking about. If it coud not guess, it asks to
- * the user what is the plate's name and store it, learning about new plates.
+ * the user what is the plate's name, a feature and store it, learning about new plates.
  *
  *
  * @author Lucas
@@ -13,7 +13,7 @@ public class GourmetGame {
 
     private static final Ui ui = new Ui();
 
-    // the root of deciocion tree
+    // the root of decision tree
     private final Tree<String> root;
 
     // the last nodes accessed during the searches
@@ -81,16 +81,16 @@ public class GourmetGame {
             lastAccessedPlate = tree.getRight();
             recursiveSearch(lastAccessedPlate);
         } else {
-//              If user does not confirm that the feature is correct then
-//             save this information at lastAccessedFeature and keep
-//             searchig through the tree.
+//            If user does not confirm that the feature is correct then
+//           save this information at lastAccessedFeature and keep
+//           searchig through the tree.
             lastAccessedFeature = tree.getLeft();
             recursiveSearch(lastAccessedFeature);
         }
     }
 
     /**
-     * Add to game's knoledgement a new plate.
+     * Add to game's knowledgement a new plate.
      *
      * @param plate the plate's name.
      * @param feature the feature's name to associate the plate with.
@@ -114,7 +114,7 @@ public class GourmetGame {
 //      While user wants to play
         while (ui.askForANewRound()) {
 
-//          Both, recursive and iterative produces the same result
+//          Both, recursive and iterative search, produces the same result
 //            game.recursiveSearch();
             game.iterativeSearch();
 

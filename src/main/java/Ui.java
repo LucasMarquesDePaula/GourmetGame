@@ -3,7 +3,7 @@ import javax.swing.JFrame;
 import static javax.swing.JOptionPane.*;
 
 /**
- * This class offers a set of iteractions with the user of GourmetGame. It uses
+ * This class offers a set of interactions with the user of GourmetGame. It uses
  * JOptionPane as a main source of resources for this interactions.
  *
  * @author Lucas
