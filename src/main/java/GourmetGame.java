@@ -1,6 +1,6 @@
 
 /**
- * The GourmetGame is the main class of a game wich objective is to guess what
+ * The GourmetGame is the main class of a game which objective is to guess what
  * plate of food the user is thinking about. If it coud not guess, it asks to
  * the user what is the plate's name, a feature and store it, learning about new plates.
  *
@@ -18,13 +18,18 @@ public class GourmetGame {
 
     private GourmetGame() {
 //      Initialize the decision tree
-        this.root = new Tree<>("massa", "lazanha", "bolo de chocolate");
+        this.root = new Tree<>("massa", "Lazanha", "Bolo de Chocolate");
     }
 
+    /**
+     * Starts asking to user about the plate it is thinking about
+     *
+     * @return the node which data is more likely to be correct
+     */
     private Tree<String> guess() {
         /**
          * This method implements the search tree algorithm with a iterative
-         * aproach
+         * approach
          * https://en.wikipedia.org/wiki/Search_tree#Searching_Algorithms
          */
         Tree<String> tree = root;
@@ -44,14 +49,20 @@ public class GourmetGame {
     /**
      * Add to game's knowledgment tree a new plate.
      *
+     * @param leaf where new entry will be added. It must have no children.
      * @param plate the plate's name.
      * @param feature the feature's name to associate the plate with.
+     * @throws IllegalArgumentException if leaf have children.
      */
-    private static void learn(Tree<String> leaf, String plate, String feature) {
+    private static void learn(Tree<String> leaf, String plate, String feature) throws IllegalArgumentException {
         /**
          * Learning is a process which a plate, associated with feature, is
          * added to the decision tree. This add must be done on a leaf.
          */
+
+        if (!leaf.isLeaf()) {
+            throw new IllegalArgumentException("leaf must have no children");
+        }
 
         leaf.setRight(leaf.getData());
         leaf.setLeft(plate);

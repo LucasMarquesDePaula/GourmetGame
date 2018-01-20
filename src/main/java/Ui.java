@@ -60,7 +60,7 @@ public class Ui {
      * plate chosen
      */
     void showWinMessage() {
-        showMessageDialog(frame, "Acertei de novo! :D");
+        showMessageDialog(frame, "Acertei de novo! :D", "Uhhu!", INFORMATION_MESSAGE);
     }
 
     /**
