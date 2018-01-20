@@ -13,84 +13,38 @@ public class GourmetGame {
 
     private static final Ui ui = new Ui();
 
-    // the root of decision tree
+//  the root of decision tree
     private final Tree<String> root;
-
-    // the last nodes accessed during the searches
-    private Tree<String> lastAccessedPlate;
-    private Tree<String> lastAccessedFeature;
+    private Tree<String> lastAccessedNode;
 
     private GourmetGame() {
 //      Initialize the decision tree
-        this.root = new Tree<>("bolo de chocolate", "massa", "lazanha");
+        this.root = new Tree<>("massa", "bolo de chocolate", "lazanha");
     }
 
-    private void iterativeSearch() {
+    private Tree<String> guess() {
         /**
          * This method implements the search tree algorithm with a iterative
          * aproach
          * https://en.wikipedia.org/wiki/Search_tree#Searching_Algorithms
          */
-
-        lastAccessedFeature = null;
-        lastAccessedPlate = root;
         Tree<String> tree = root;
 
 //      If tree is a leaf, the search has been finished.
         while (!tree.isLeaf()) {
-//          Ask to user if feature is correct
-            if (ui.ask(tree.getLeft())) {
-//               If user confirms that the feature is correct then
-//              save this information at lastAccessedPlate and keep
-//              searching through the tree.
-                lastAccessedPlate = tree.getRight();
-                tree = lastAccessedPlate;
+            lastAccessedNode = tree;
+            if (ui.ask(tree)) {
+                tree = tree.getRight();
             } else {
-//               If user does not confirm that the feature is correct then
-//              save this information at lastAccessedFeature and keep
-//              searching through the tree.
-                lastAccessedFeature = tree.getLeft();
-                tree = lastAccessedFeature;
+                tree = tree.getLeft();
             }
         }
-    }
 
-    private void recursiveSearch() {
-        lastAccessedFeature = null;
-        lastAccessedPlate = root;
-        recursiveSearch(root);
-    }
-
-    private void recursiveSearch(Tree<String> tree) {
-        /**
-         * This method implements the search tree algorithm with a recursive
-         * aproach
-         * https://en.wikipedia.org/wiki/Search_tree#Searching_Algorithms
-         */
-
-//      If tree is a leaf, the search has been finished.
-        if (tree.isLeaf()) {
-            return;
-        }
-
-//      Ask to user if feature is correct
-        if (ui.ask(tree.getLeft())) {
-//           If user confirms that the feature is correct then
-//          save this information at lastAccessedPlate and keep
-//          searching through the tree.
-            lastAccessedPlate = tree.getRight();
-            recursiveSearch(lastAccessedPlate);
-        } else {
-//            If user does not confirm that the feature is correct then
-//           save this information at lastAccessedFeature and keep
-//           searchig through the tree.
-            lastAccessedFeature = tree.getLeft();
-            recursiveSearch(lastAccessedFeature);
-        }
+        return tree;
     }
 
     /**
-     * Add to game's knowledgement a new plate.
+     * Add to game's decicion tree a new plate.
      *
      * @param plate the plate's name.
      * @param feature the feature's name to associate the plate with.
@@ -102,10 +56,13 @@ public class GourmetGame {
          * feature.
          */
 
-//      Plates must be stored at right node
-        lastAccessedFeature.setRight(plate);
-//      Features must be stored at left node
-        lastAccessedFeature.setLeft(feature);
+        Tree<String> entry = new Tree<>(feature);
+
+        entry.setRight(lastAccessedNode.getLeft());
+        entry.setLeft(plate);
+
+//      Add new entry to tree
+        lastAccessedNode.setLeft(entry);
     }
 
     public static void start() {
@@ -115,10 +72,9 @@ public class GourmetGame {
         while (ui.askForANewRound()) {
 
 //          Both, recursive and iterative search, produces the same result
-//            game.recursiveSearch();
-            game.iterativeSearch();
+            Tree<String> found = game.guess();
 
-            if (ui.ask(game.lastAccessedPlate)) {
+            if (ui.ask(found)) {
 //               If the game coud guess what plate user was thinking about
 //              show a message.
                 ui.showWinMessage();
@@ -128,7 +84,7 @@ public class GourmetGame {
 //           If the game could not guess what plate user was thinking about,
 //          add this new entry to the decision tree
             String plate = ui.askForANewPlate();
-            String feature = ui.askForANewFeature(plate, game.lastAccessedPlate);
+            String feature = ui.askForANewFeature(plate, found);
             game.learn(plate, feature);
         }
     }

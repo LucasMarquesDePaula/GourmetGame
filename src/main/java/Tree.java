@@ -38,7 +38,7 @@ public class Tree<T> {
     }
 
     /**
-     * 
+     *
      * @return true if tree has no child
      * @see https://en.wikipedia.org/wiki/Tree_(data_structure)#leaf
      */
@@ -51,7 +51,11 @@ public class Tree<T> {
     }
 
     public void setLeft(T left) {
-        this.left = new Tree<T>(left);
+        this.setLeft(new Tree<T>(left));
+    }
+
+    public void setLeft(Tree<T> left) {
+        this.left = left;
     }
 
     public Tree<T> getRight() {
@@ -59,6 +63,10 @@ public class Tree<T> {
     }
 
     public void setRight(T right) {
-        this.right = new Tree<T>(right);
+        this.setRight(new Tree<T>(right));
+    }
+
+    public void setRight(Tree<T> right) {
+        this.right = right;
     }
 }
