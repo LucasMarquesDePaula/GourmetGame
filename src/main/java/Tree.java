@@ -43,7 +43,7 @@ public class Tree<T> {
      * @see https://en.wikipedia.org/wiki/Tree_(data_structure)#leaf
      */
     public boolean isLeaf() {
-        return getLeft() == null || getRight() == null;
+        return getLeft() == null && getRight() == null;
     }
 
     public Tree<T> getLeft() {
