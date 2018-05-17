@@ -7,7 +7,7 @@
  *
  * @author Lucas
  * @see https://en.wikipedia.org/wiki/Decision_tree
- * @see http://pt.akinator.com/
+ * @see http://akinator.com/
  */
 public class GourmetGame {
 
